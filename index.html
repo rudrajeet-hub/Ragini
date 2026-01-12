@@ -174,6 +174,93 @@
     font-family: 'Poppins', sans-serif;
     min-height: 100px;
 }
+        .photo-string-section {
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+}
+
+.string-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+.wire {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #4a3a3a;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Little "Fairy Lights" on the wire */
+.wire::after {
+    content: '✨  ✨  ✨  ✨  ✨  ✨  ✨';
+    position: absolute;
+    top: -10px;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 50px;
+    font-size: 12px;
+}
+
+.memory-trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s;
+}
+
+.memory-trunk:hover { transform: translateX(-50%) scale(1.1); }
+
+.trunk-body { font-size: 80px; }
+.trunk-label { font-weight: 600; color: var(--primary-pink); margin-top: 10px; }
+
+/* The Photos being hung */
+.hung-photo {
+    position: absolute;
+    width: 120px;
+    background: white;
+    padding: 8px 8px 25px 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 1px solid #ddd;
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+    opacity: 0;
+    bottom: 50px; /* Start at the box */
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+}
+
+/* The wooden clip at the top */
+.hung-photo::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 30px;
+    background: #d2b48c; /* Wood color */
+    border-radius: 2px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    z-index: 6;
+}
+
+.hung-photo img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
     </style>
 </head>
 <body>
@@ -291,7 +378,30 @@
         <p id="typewriter-text"></p>
     </div>
 </section>
+<section style="text-align: center; padding: 60px 20px;">
+    <h2 class="section-title">The "Reasons Why" Jar</h2>
+    <div id="reason-display" class="script-font" style="font-size: 2rem; color: var(--primary-pink); min-height: 80px; margin-bottom: 20px;">
+        Click the jar to see a reason...
+    </div>
+    <div class="jar-container" onclick="showNewReason()" style="cursor: pointer; font-size: 80px;">
+        🏺
+    </div>
+</section>
+    <section class="photo-string-section">
+    <h2 class="section-title" data-aos="fade-up">Our Memories on a String</h2>
+    
+    <div class="string-container">
+        <div class="wire"></div>
+        
+        <div class="memory-trunk" onclick="hangPhotos()">
+            <div class="trunk-lid"></div>
+            <div class="trunk-body">🎁</div>
+            <p class="trunk-label">Tap to Release Memories</p>
+        </div>
 
+        <div id="photo-hang-area"></div>
+    </div>
+</section>
 
     <section class="proposal-box">
         <h2 style="margin-bottom: 30px; font-size: 2.5rem; font-family: 'Great Vibes'; color: var(--gold);" data-aos="fade-down">One Last Thing...</h2>
@@ -412,6 +522,85 @@ window.addEventListener('scroll', function() {
         typeWriter();
     }
 });
+        const reasons = [
+    "The way your eyes sparkle when you're happy.",
+    "Your kindness towards everyone you meet.",
+    "The way you make even the smallest moments feel special.",
+    "Your incredible taste in everything.",
+    "How you always know exactly what to say to make me smile.",
+    "Simply because you are YOU."
+];
+
+function showNewReason() {
+    const display = document.getElementById('reason-display');
+    const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
+    
+    // Add a small bounce animation to the jar
+    document.querySelector('.jar-container').style.transform = "scale(1.2)";
+    setTimeout(() => {
+        document.querySelector('.jar-container').style.transform = "scale(1)";
+    }, 200);
+
+    display.style.opacity = 0;
+    setTimeout(() => {
+        display.innerText = randomReason;
+        display.style.opacity = 1;
+    }, 300);
+    
+    // Mini confetti burst
+    confetti({
+        particleCount: 20,
+        spread: 50,
+        origin: { y: 0.8 }
+    });
+}
+        function hangPhotos() {
+    const photoUrls = [
+        "https://i.ibb.co/TB3S1XY9/Ragini-0.png",
+        "https://i.ibb.co/99QXm2z9/Ragini-9.png",
+        "https://i.ibb.co/MxHt95kv/Ragini-5.png",
+        "https://i.ibb.co/G4t3tyFJ/Ragini-7.png"
+    ];
+
+    const container = document.getElementById('photo-hang-area');
+    const trunk = document.querySelector('.memory-trunk');
+    
+    // Hide the trunk label after clicking
+    document.querySelector('.trunk-label').style.opacity = '0';
+
+    photoUrls.forEach((url, index) => {
+        setTimeout(() => {
+            const photo = document.createElement('div');
+            photo.classList.add('hung-photo');
+            photo.innerHTML = `<img src="${url}" alt="Memory">`;
+            
+            // Calculate random "hanging" position on the wire
+            const xPos = 15 + (index * 20); // Spread across the wire
+            const rotation = (Math.random() * 20) - 10; // Slight tilt
+
+            container.appendChild(photo);
+
+            // Trigger animation
+            setTimeout(() => {
+                photo.style.opacity = '1';
+                photo.style.bottom = '300px'; // Move up to the wire
+                photo.style.left = xPos + '%';
+                photo.style.transform = `rotate(${rotation}deg) scale(1)`;
+            }, 100);
+
+            // Pop sound effect (visual confetti)
+            confetti({
+                particleCount: 15,
+                startVelocity: 20,
+                origin: { x: 0.5, y: 0.8 }
+            });
+
+        }, index * 400); // 400ms delay between each photo
+    });
+    
+    // Disable the trunk so it can't be clicked twice
+    trunk.onclick = null;
+}
     </script>
 </body>
 </html>
