@@ -96,6 +96,84 @@
             .proposal-text { font-size: 2rem; }
             .big-question { font-size: 2.5rem; }
         }
+        /* Gift Box Styles */
+.gift-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    padding: 50px 20px;
+}
+
+.gift-box {
+    width: 120px;
+    height: 120px;
+    background: var(--primary-pink);
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s;
+    animation: wiggle 2s infinite;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+.gift-lid {
+    position: absolute;
+    top: -10px;
+    width: 130px;
+    height: 30px;
+    background: var(--gold);
+    border-radius: 5px;
+    z-index: 2;
+    transition: 0.5s;
+}
+
+.gift-box.open .gift-lid {
+    transform: translateY(-50px) rotate(-15deg);
+    opacity: 0;
+}
+
+.gift-text {
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+    z-index: 1;
+}
+
+.gift-box.open .gift-text {
+    color: var(--primary-pink);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    animation: fadeInUp 0.5s forwards;
+}
+
+/* Typewriter Styles */
+.typewriter-section {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: inset 0 0 20px rgba(212, 63, 93, 0.05);
+    border: 1px dashed var(--soft-pink);
+}
+
+.typewriter-container p {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100px;
+}
     </style>
 </head>
 <body>
@@ -187,6 +265,32 @@
             </div>
         </div>
     </section>
+    <h2 class="section-title" data-aos="fade-up">Tap to Open Your Gifts</h2>
+<section class="gift-container">
+    <div class="gift-box" onclick="openGift(this, 'A Forever Best Friend 🌸')" data-aos="zoom-in">
+        <div class="gift-lid"></div>
+        <div class="gift-body"></div>
+        <span class="gift-text">Click Me</span>
+    </div>
+
+    <div class="gift-box" onclick="openGift(this, 'Unlimited Ice Cream Dates 🍦')" data-aos="zoom-in" data-aos-delay="200">
+        <div class="gift-lid"></div>
+        <div class="gift-body"></div>
+        <span class="gift-text">Click Me</span>
+    </div>
+
+    <div class="gift-box" onclick="openGift(this, 'A Shoulder to Lean On ⚓')" data-aos="zoom-in" data-aos-delay="400">
+        <div class="gift-lid"></div>
+        <div class="gift-body"></div>
+        <span class="gift-text">Click Me</span>
+    </div>
+</section>
+
+<section class="typewriter-section" data-aos="fade-up">
+    <div class="typewriter-container">
+        <p id="typewriter-text"></p>
+    </div>
+</section>
 
 
     <section class="proposal-box">
@@ -269,6 +373,45 @@
                 <p style="font-size: 1.5rem; margin-top: 20px;">You just made me the happiest person in Mumbai. ❤️</p>
             `;
         }
+        // --- Gift Box Logic ---
+function openGift(element, message) {
+    if (!element.classList.contains('open')) {
+        element.classList.add('open');
+        element.style.animation = "none"; // Stop wiggling
+        element.style.background = "#fff";
+        element.style.border = "2px solid var(--soft-pink)";
+        element.querySelector('.gift-text').innerText = message;
+        
+        // Add a little individual confetti for each gift
+        confetti({
+            particleCount: 40,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#d43f5d', '#cfb53b']
+        });
+    }
+}
+
+// --- Typewriter Effect ---
+const textToType = "Every day with you feels like a beautiful melody. I wanted to create this space to remind you that you are appreciated, loved, and celebrated—not just today, but every single day. Keep shining, Ragini...";
+let index = 0;
+
+function typeWriter() {
+    if (index < textToType.length) {
+        document.getElementById("typewriter-text").innerHTML += textToType.charAt(index);
+        index++;
+        setTimeout(typeWriter, 50);
+    }
+}
+
+// Start typing when the section is scrolled into view
+window.addEventListener('scroll', function() {
+    const section = document.querySelector('.typewriter-section');
+    const position = section.getBoundingClientRect();
+    if(position.top < window.innerHeight && index === 0) {
+        typeWriter();
+    }
+});
     </script>
 </body>
 </html>
