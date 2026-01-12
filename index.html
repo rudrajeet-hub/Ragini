@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Ragini | A Special Surprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #d43f5d; /* Deeper, richer pink */
+            --soft-pink: #ffabb9;
+            --gold: #cfb53b; /* More metallic gold */
+            --bg-cream: #fff9f5;
+            --text-dark: #4a3a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        scroll-behavior: smooth;
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- Floating Elements --- */
+        .heart-bg {
+            position: fixed; color: var(--primary-pink); font-size: 20px; pointer-events: none; z-index: 999; animation: floatUp 4s linear infinite; opacity: 0;
+        }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0.8; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+
+        /* Music Player */
+        .music-control {
+            position: fixed; bottom: 20px; left: 20px; z-index: 1000; background: white; padding: 10px 15px; border-radius: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; color: var(--primary-pink);
+        }
+        .music-control span { margin-left: 8px; font-weight: 600; }
+
+        /* --- Typography & Structure --- */
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .script-font { font-family: 'Great Vibes', cursive; font-weight: normal; }
+        .section-title { text-align: center; font-size: 3rem; margin: 80px 0 40px; color: var(--primary-pink); position: relative; }
+        .section-title::after { content: '♥'; display: block; font-size: 2rem; color: var(--gold); margin-top: 10px; font-family: 'Dancing Script'; }
+
+        /* --- Header Section --- */
+        header {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px;
+            /* RENAME YOUR BACKGROUND IMAGE to 'bg.jpg' and put it in the same folder */
+            background: linear-gradient(rgba(40, 10, 20, 0.4), rgba(40, 10, 20, 0.4)), url('https://images.unsplash.com/photo-1490750967868-88dd44862931?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+        header h1 { font-size: 5rem; text-shadow: 3px 3px 10px rgba(0,0,0,0.5); line-height: 1.2; }
+        header .subtitle { font-size: 1.5rem; font-weight: 300; letter-spacing: 2px; margin-top: 20px; }
+
+        /* --- "Why You" Cards --- */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .love-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(212, 63, 93, 0.1); transition: all 0.4s ease; border-top: 4px solid var(--gold); }
+        .love-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(212, 63, 93, 0.2); }
+        .love-card h3 { color: var(--primary-pink); margin-bottom: 15px; }
+
+        /* --- NEW: Photo Gallery Section --- */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; padding: 20px;
+        }
+        .gallery-item { height: 300px; overflow: hidden; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.08); }
+
+        /* --- NEW: Promise Flip Cards --- */
+        .flip-card { background-color: transparent; width: 100%; height: 250px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-radius: 15px; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px; border-radius: 15px; }
+        .flip-card-front { background: white; color: var(--primary-pink); border: 2px solid var(--soft-pink); }
+        .flip-card-back { background: linear-gradient(135deg, var(--soft-pink), var(--primary-pink)); color: white; transform: rotateY(180deg); }
+        .flip-card-front h3 { font-size: 2rem; font-family: 'Dancing Script'; }
+        .flip-card-back p { font-size: 1.2rem; font-weight: 600; }
+
+        /* --- Proposal Finale --- */
+        .proposal-box { background: linear-gradient(135deg, var(--primary-pink), #e85d7b); padding: 100px 20px; text-align: center; color: white; margin-top: 100px; position: relative; overflow: hidden; }
+        .proposal-btn { background: white; color: var(--primary-pink); padding: 25px 60px; border: none; border-radius: 50px; font-size: 1.8rem; font-weight: bold; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: 0.4s; font-family: 'Playfair Display', serif; position: relative; z-index: 2; }
+        .proposal-btn:hover { transform: scale(1.05); background: var(--gold); color: white; box-shadow: 0 15px 35px rgba(207, 181, 59, 0.4); }
+
+        /* Modal */
+        #secretModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 2000; justify-content: center; align-items: center; color: white; text-align: center; padding: 30px; }
+        .modal-content { max-width: 800px; animation: zoomIn 0.5s ease; }
+        .proposal-text { font-family: 'Great Vibes', cursive; font-size: 3rem; line-height: 1.4; }
+        .big-question { font-family: 'Playfair Display'; font-size: 4rem; color: var(--soft-pink); margin: 40px 0; display: block; }
+        .yes-btn { padding: 20px 50px; background: var(--primary-pink); border: none; color: white; border-radius: 30px; cursor: pointer; font-size: 1.5rem; font-weight: bold; transition: 0.3s; }
+        .yes-btn:hover { background: var(--gold); transform: scale(1.1); }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 3.5rem; }
+            .section-title { font-size: 2.2rem; }
+            .proposal-text { font-size: 2rem; }
+            .big-question { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="" type="audio/mpeg"> </audio>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <svg xmlns="https://drive.google.com/file/d/1BUOD-u24x1fCnynbRQ-3ip9buqjxroJx/view?usp=drive_link" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h4v6h-4v-6zm0 8h4v2h-4v-2z"/></svg>
+        <span id="musicStatus">Play Our Song</span>
+    </div>
+
+    <header>
+        <h1 data-aos="zoom-in" data-aos-duration="1500"><span class="script-font" style="font-size: 4rem; display: block; margin-bottom: -20px; color: var(--gold);">Happy Birthday</span> Ragini</h1>
+        <p class="subtitle" data-aos="fade-up" data-aos-delay="800">Today is all about you, my star.</p>
+    </header>
+
+    <h2 class="section-title" data-aos="fade-up">Why You Are So Special to Me</h2>
+    <section class="grid-container">
+        <div class="love-card" data-aos="fade-up" data-aos-delay="100">
+            <h3>Your Aura</h3>
+            <p>You carry a light with you that changes the energy of every room you walk into. It's impossible to ignore.</p>
+        </div>
+        <div class="love-card" data-aos="fade-up" data-aos-delay="200">
+            <h3>Your Laughter</h3>
+            <p>It’s genuinely my favorite sound. It’s honest, unscripted, and incredibly contagious.</p>
+        </div>
+        <div class="love-card" data-aos="fade-up" data-aos-delay="300">
+            <h3>Your Resilience</h3>
+            <p>The grace with which you handle life's challenges is something I deeply admire. You are stronger than you know.</p>
+        </div>
+        <div class="love-card" data-aos="fade-up" data-aos-delay="400">
+            <h3>My Inspiration</h3>
+            <p>Being around you makes me want to be a better version of myself. You inspire me daily.</p>
+        </div>
+    </section>
+
+    <h2 class="section-title" data-aos="fade-up">Moments That Stopped Time</h2>
+    <section class="gallery-grid">
+        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+            <img src="https://ibb.co/0jbSKNmH" alt="Ragini">
+        </div>
+        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+            <img src="https://ibb.co/bgchjLqg" alt="Ragini">
+        </div>
+        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
+            <img src="https://ibb.co/DHFvLgfJ" alt="Ragini">
+        </div>
+         <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
+            <img src="https://ibb.co/xtf8fW3s" alt="Ragini">
+        </div>
+    </section>
+    <p style="text-align: center; margin-top: 20px; font-style: italic; color: #888;">(Every picture of you is my favorite.)</p>
+
+
+    <h2 class="section-title" data-aos="fade-up">Things I Promise You</h2>
+    <section class="grid-container">
+        <div class="flip-card" data-aos="flip-left" data-aos-delay="100">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Always Listen</h3>
+                    <span style="font-size: 30px; margin-top: 10px;">👂</span>
+                </div>
+                <div class="flip-card-back">
+                    <p>To your dreams, your worries, and your everyday stories. I'm here for all of it.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card" data-aos="flip-left" data-aos-delay="300">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Be Your Cheerleader</h3>
+                    <span style="font-size: 30px; margin-top: 10px;">🎉</span>
+                </div>
+                <div class="flip-card-back">
+                    <p>To support your goals and celebrate every single one of your wins, big or small.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card" data-aos="flip-left" data-aos-delay="500">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <h3>Make You Smile</h3>
+                    <span style="font-size: 30px; margin-top: 10px;">😊</span>
+                </div>
+                <div class="flip-card-back">
+                    <p>To try my best every single day to be a reason for that beautiful smile of yours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="proposal-box">
+        <h2 style="margin-bottom: 30px; font-size: 2.5rem; font-family: 'Great Vibes'; color: var(--gold);" data-aos="fade-down">One Last Thing...</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;" data-aos="fade-up">There is something I've wanted to ask you for a very long time. It's the real reason for this website.</p>
+        <button class="proposal-btn" onclick="showProposal()" data-aos="zoom-in" data-aos-delay="300">Open The Final Chapter</button>
+    </section>
+
+    <div id="secretModal">
+        <div class="modal-content">
+            <div class="proposal-text">
+                <p>Ragini...</p>
+                <p>I've admired you from a distance for so long, but I can't keep it inside anymore. You mean the world to me.</p>
+                <span class="big-question">Will you be mine?</span>
+            </div>
+            <button class="yes-btn" onclick="celebrate()">YES! ❤️</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // --- Music Player Logic ---
+        const bgMusic = document.getElementById('bgMusic');
+        const musicStatus = document.getElementById('musicStatus');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (bgMusic.getAttribute('src') === "") {
+                alert("Rudra, don't forget to add the music link in the code! (Line 128)");
+                return;
+            }
+            if (isPlaying) {
+                bgMusic.pause();
+                musicStatus.innerText = "Play Our Song";
+            } else {
+                bgMusic.play().catch(e => alert("Please interact with the page first to play music due to browser policies."));
+                musicStatus.innerText = "Pause Music";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // --- Floating Hearts ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = ['♥', '💖', '💕'][Math.floor(Math.random() * 3)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(createHeart, 400);
+
+        // --- Proposal Functions ---
+        function showProposal() {
+            document.getElementById('secretModal').style.display = 'flex';
+            // Optional: Pause main music and play a special proposal song here if you want
+        }
+
+        function celebrate() {
+            // Massive Confetti Explosion
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 3000, colors: ['#d43f5d', '#cfb53b', '#ffffff'] };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti({ ...defaults, particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } });
+            }, 250);
+
+            // Final Message
+            document.querySelector('.modal-content').innerHTML = `
+                <h2 style="font-family: 'Great Vibes'; font-size: 4rem; color: var(--gold);">Best Birthday Gift Ever!</h2>
+                <p style="font-size: 1.5rem; margin-top: 20px;">You just made me the happiest person in Mumbai. ❤️</p>
+            `;
+        }
+    </script>
+</body>
+</html>
